@@ -1,5 +1,4 @@
 import { MODULE_ID } from "../main.mjs";
-// import { PageFlip } from "../scripts/pageFlip-HexoVN-RnD.module.mjs";
 import { PageFlip } from "../scripts/page-flip.module.mjs";
 
 const bookSizeCorrection = 1;
@@ -7,7 +6,7 @@ const bookWidth = 1390;
 const bookHeight = 937;
 
 export class StorySheet extends JournalSheet {
-  pageFlip = `modules/${MODULE_ID}/sounds/paper-flip.mp3`;
+  pageFlipSoundURL = `modules/${MODULE_ID}/sounds/paper-flip.mp3`;
   static classes = ["sheet", "story-sheet"];
 
   static get defaultOptions() {
@@ -32,7 +31,12 @@ export class StorySheet extends JournalSheet {
   sound() {
     if (game.settings.get(`${MODULE_ID}`, "bookOpenSound")) {
       AudioHelper.play(
-        { src: this.pageFlip, volume: 0.8, autoplay: true, loop: false },
+        {
+          src: this.pageFlipSoundURL,
+          volume: 0.8,
+          autoplay: true,
+          loop: false,
+        },
         false
       );
     }
@@ -95,46 +99,64 @@ export class StorySheet extends JournalSheet {
     if (savedPage > data.pages.length) {
       savedPage = data.pages.length - 1;
     }
+
     this.pageFlipElement = new PageFlip(
       document.getElementById("story-" + data._id),
       {
         width: jepWidth, // getBookWidth(), // bookWidth,  // 550, // base page width
         height: jepHeight, //getBookHeight(), // bookHeight, //733, // base page height
-
         size: "fixed",
-        //startPage: 0,
-        // set threshold values:
-        //minWidth: 315,
-        //maxWidth: 1000,
-        //orientation: portrait,
-
-        disableFlipByClick: true,
         useMouseEvents: false,
         showPageCorners: false,
         maxShadowOpacity: 0.5, // Half shadow intensity
         showCover: true,
-        mobileScrollSupport: false, // disable content scrolling on mobile devices
-
         clickEventClasses: [
           "storyteller2-page-entry-nav",
           "journal-entry-pages-nav",
+          "page-title",
         ],
       }
     );
 
-    this.pageFlipElement.loadFromHTML(document.querySelectorAll(".page-num"));
+    if (this.pageFlipElement.pages == null) {
+      this.pageFlipElement.loadFromHTML(document.querySelectorAll(".page-num"));
+    } else {
+      this.pageFlipElement.updateFromHtml(
+        document.querySelectorAll(".page-num")
+      );
+    }
+
+    this.pageFlipElement.flip(0);
+
     if (options.pageId != undefined) {
       //this.goToPage(options.pageId);
     }
+    var totalPages = this.pageFlipElement.pages.pages.length;
+    this.stylePageTurnButtons(0, totalPages);
+
+    var journalEntries = document.querySelectorAll(
+      ".page-num.num-start ol li.level1"
+    );
+    journalEntries.forEach((element) => {
+      //element.addEventListener("click", function (event) {
+      element.addEventListener("click", (event) => {
+        var pageId = event.currentTarget?.dataset?.pageId;
+        this.goToPage(pageId);
+      });
+    });
 
     this.pageFlipElement.on("flip", (e) => {
       // callback code
       var newPageNumber = e.data;
 
       // total pages in the Table of Contents(NOT the book array!!!)
+      /*
       var totalPages = document.querySelectorAll(
         ".journal-entry-pages .pagelookup li"
       );
+      */
+      var totalPages = this.pageFlipElement.pages.pages.length;
+
       let count = totalPages?.length;
       let ajustednewPageNumber =
         newPageNumber != 0 && !(newPageNumber > count)
@@ -147,39 +169,30 @@ export class StorySheet extends JournalSheet {
         pageState = "toc";
         pageClass = "num-start";
       }
+      /*
       if (newPageNumber === count) {
         pageState = "last";
       }
       if (newPageNumber > 0 && newPageNumber < count) {
         pageState = "middle";
       }
+      */
 
-      this.stylePageTurnButtons(pageState, pageClass);
+      this.stylePageTurnButtons(newPageNumber, totalPages);
     });
   }
 
-  stylePageTurnButtons(pageType, pageClass) {
-    let leftArrow = document.querySelector(
-      `.page-num.${CSS.escape(pageClass)} .journal-page-arrow-left`
-    );
+  stylePageTurnButtons(pageNumber, totalPages) {
     let rightArrow = document.querySelector(
-      `.page-num.${CSS.escape(pageClass)} .journal-page-arrow-right`
+      ".page-num .journal-page-arrow-right.next" //journal-page-arrow-right.next
     );
-
-    switch (pageType) {
-      case "toc":
-        leftArrow.style.display = "none";
-        rightArrow.style.display = "block";
-        break;
-      case "middle":
-        leftArrow.style.display = "block";
-        rightArrow.style.display = "block";
-        break;
-      case "last":
-        leftArrow.style.display = "block";
+    if (rightArrow != null) {
+      rightArrow.style.display = "block";
+      if (pageNumber + 2 >= totalPages) {
         rightArrow.style.display = "none";
-        break;
+      }
     }
+
     return;
   }
 
@@ -221,6 +234,20 @@ export class StorySheet extends JournalSheet {
         resolve();
       });
     });
+  }
+
+  goToPage(pageId) {
+    let targetPage = document.querySelector(
+      `.story-sheet .page-num .journal-entry-page[data-page-id="${pageId}"]`
+    );
+    // since the handlebars starts at ZERO, we need to add 1 to each
+    let targetPageNum = Number(targetPage.dataset.entryIndex) + 1;
+    console.log(`going to page: ${targetPageNum}, Journal Entry id: ${pageId}`);
+
+    this.pageFlipElement.flip(targetPageNum); //ToPage(targetPageNum);
+
+    var totalPages = this.pageFlipElement.pages.pages.length;
+    this.stylePageTurnButtons(targetPageNum, totalPages);
   }
 }
 

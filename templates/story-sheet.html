@@ -1,7 +1,7 @@
 <div class="journal-sheet-container {{cssClass}}">
   <div class="journal-entry-pages">
     <div id="story-{{data._id}}" class="scrollable pages">
-      <div class="page-num num-start">
+      <div class="page-num num-start" data-density="hard">
         <div class="journal-entry-page pages-content">
           <div class="content-inner">
             <form class="journal-header">
@@ -50,10 +50,11 @@
         ></div>
       </div>
       {{#each toc as |page|}}
-      <div class="page-num {{page.number}}">
+      <div class="page-num {{page.number}}" data-density="hard">
         <article
           class="journal-entry-page {{page.type}}"
           data-page-id="{{page._id}}"
+          data-entry-index="{{page.number}}"
         >
           {{#if page.editable}}
           <div class="edit-container">
@@ -61,8 +62,12 @@
           </div>
           {{/if}}
         </article>
-        <div class="journal-page-arrow-left storyteller2-page-entry-nav"></div>
-        <div class="journal-page-arrow-right storyteller2-page-entry-nav"></div>
+        <div
+          class="journal-page-arrow-left storyteller2-page-entry-nav prev"
+        ></div>
+        <div
+          class="journal-page-arrow-right storyteller2-page-entry-nav next"
+        ></div>
       </div>
       {{/each}}
     </div>

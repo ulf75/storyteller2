@@ -3,6 +3,32 @@
 @import "themes/newspaper.css";
 @import "themes/fullscreen.css";
 
+.app.window-app.sheet.story-sheet + .journal-sheet.journal-entry-page {
+  background: url(../img/old_book/editor.webp);
+  background-size: 100% 100%;
+  border: none;
+}
+
+.app.window-app.sheet.story-sheet
+  + .journal-sheet.journal-entry-page
+  .window-header {
+  background: none;
+}
+
+.app.window-app.sheet.story-sheet
+  + .journal-sheet.journal-entry-page
+  .window-content {
+  background: none;
+}
+
+.app.window-app.sheet.story-sheet
+  + .journal-sheet.journal-entry-page
+  .window-header {
+  background: url(../img/old_book/header_old.webp);
+  /*background-size: 100% 100%;*/
+  border: none;
+}
+
 .app.story-sheet {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -107,7 +133,7 @@ nav.storyteller-nav.tabs {
   content: " ";
   width: 100%;
   height: 100%;
-  background: url(../img/book.webp);
+  background: url(../img/old_book/book.webp);
   background-size: 100% 100%;
   z-index: -1;
 }
@@ -205,7 +231,7 @@ nav.storyteller-nav.tabs {
 }
 
 .story-sheet .page-num.num-start {
-  background-image: url(../img/right-page.webp);
+  background-image: url(../img/old_book/right-page.webp);
   background-size: 100% 100%;
 }
 
@@ -248,13 +274,12 @@ nav.storyteller-nav.tabs {
   margin: 0;
 }
 
-.page-num.odd {
-  background-image: url(../img/right-page.webp);
-  background-size: 100% 100%;
+.page-num.--right .journal-page-arrow-left.prev {
+  display: none;
 }
-.page-num.even {
-  background-image: url(../img/left-page.webp);
-  background-size: 100% 100%;
+
+.page-num.--left .journal-page-arrow-right.next {
+  display: none;
 }
 
 .story-sheet .editor-edit {
@@ -263,14 +288,14 @@ nav.storyteller-nav.tabs {
   right: 2%;
 }
 
-div.app.sheet.journal-sheet.journal-entry section.window-content {
+div.app.sheet.story-sheet.journal-sheet.journal-entry section.window-content {
   border-color: blue;
   border-width: 1px;
   border-style: solid;
   background: transparent !important;
 }
 
-div.app.sheet.journal-sheet.journal-entry
+div.app.sheet.story-sheet.journal-sheet.journal-entry
   section.window-content
   div.journal-sheet-container
   section.journal-entry-content {
@@ -294,12 +319,24 @@ div.app.sheet.journal-sheet.journal-entry
   left: 50px;
 }
 
-/*
-.journal-entry-page.image figure img {
-  -webkit-mask-image: url(../img/journal_mask.webp);
-  -webkit-mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  height: 100%;
+.story-sheet .window-app.sheet.journal-sheet.journal-entry-page {
+  background: url(../img/single_sheet_parchment/very-little.webp);
+  background-size: 100% 100%;
+  border: none;
 }
-  */
+
+.story-sheet .window-app.sheet.journal-sheet.journal-entry-page .window-header {
+  background: none;
+}
+
+.story-sheet
+  .window-app.sheet.journal-sheet.journal-entry-page
+  .window-content {
+  background: none;
+}
+
+.story-sheet .window-app.sheet.journal-sheet.journal-entry-page .window-header {
+  background: url(../img/single_sheet_parchment/header.webp);
+  /*background-size: 100% 100%;*/
+  border: none;
+}

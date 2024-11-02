@@ -1,5 +1,4 @@
-//import {PageFlip} from "../scripts/page-flip.module.mjs";
-import { PageFlip } from "../scripts/pageFlip-HexoVN-RnD.module.mjs";
+import { PageFlip } from "../scripts/page-flip.module.mjs";
 import { MODULE_ID } from "../main.mjs";
 
 const bookSizeCorrection = 1;
@@ -66,7 +65,7 @@ export class SingleSheetMinimal extends JournalSheet {
         showPageCorners: true,
         swipeDistance: 5,
         //clickEventForward: 0,
-        useMouseEvents: false,
+        useMouseEvents: true,
 
         maxShadowOpacity: 0.25, // Half shadow intensity
         //showCover: true,
