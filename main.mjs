@@ -5,20 +5,60 @@ import { StorySheet } from "./sheets/story-sheet.js";
 import { registerHotkeys } from "./scripts/config.js";
 
 export const MODULE_ID = "storyteller2";
-export const SHEET_TYPES = [
-  "SingleSheetClean",
-  "SingleSheetMinimal",
-  "StorySheet",
-];
 
-class StoryTeller2Journal {
+class StoryTeller2 {
+  static SHEET_TYPES = {
+    default: JournalSheet,
+    story: StorySheet,
+  };
+
+  static SHEET_LABELS = {
+    story: "STORYTELLER.StoryEntry",
+  };
+
+  static getDocumentTypes() {
+    return StoryTeller2.SHEET_TYPES;
+  }
+
+  static getTypeLabels() {
+    return StoryTeller2.SHEET_LABELS;
+  }
+
   init() {
+    let types = StoryTeller2.getDocumentTypes();
+    let labels = StoryTeller2.getTypeLabels();
+
     this._activateSocketListeners(game.socket);
     registerHotkeys();
   }
 
   _activateSocketListeners(socket) {
     socket.on("module.storyteller2journal", this._setPageToOpen.bind(this));
+  }
+
+  registerObjects2(types, labels) {
+    for (let [k, v] of Object.entries(labels)) {
+      if (k === "default") continue;
+      /*
+      game.StoryTeller2.registerAddonSheet({
+         
+        key: "StorySheet",
+       
+        sheet: StorySheet,
+        
+        label: "TYPES.STORY_TELLER2.StorySheet",
+      });
+      */
+
+      game.StoryTeller2.registerAddonSheet({
+        /* Unique key, must not overlap with other keys. It is used to access the object. */
+        key: "StorySheet",
+        /* The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed. */
+        sheet: StorySheet,
+        /* Key-identifier of the string for translation. */
+        label: "TYPES.STORY_TELLER2.StorySheet",
+      });
+    }
   }
 
   registerObjects(types, labels) {
@@ -46,6 +86,7 @@ class StoryTeller2Journal {
     pages[data.id] = data.page;
     await game.settings.set("storyteller2journal", "pages", pages);
   }
+
   registerAddonSheet(s) {
     let types = {};
     let labels = {};
@@ -60,8 +101,8 @@ class StoryTeller2Journal {
   }
 }
 
-class StoryTeller2JournalModel extends foundry.abstract.TypeDataModel {
-  static LOCALIZATION_PREFIXES = ["StoryTeller2Journal.path"];
+class StoryTeller2Model extends foundry.abstract.TypeDataModel {
+  static LOCALIZATION_PREFIXES = ["StoryTeller2.path"];
 
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -80,7 +121,7 @@ class StoryTeller2JournalModel extends foundry.abstract.TypeDataModel {
   }
 }
 
-class StoryTeller2JournalPageSheet extends JournalTextPageSheet {
+class StoryTeller2PageSheet extends JournalTextPageSheet {
   get template() {
     return `modules/${MODULE_ID}/templates/storyteller2-sheet-${
       this.isEditable ? "edit" : "view"
@@ -107,7 +148,7 @@ class StoryTeller2JournalPageSheet extends JournalTextPageSheet {
 
 Hooks.on("init", () => {
   Object.assign(CONFIG.JournalEntryPage.dataModels, {
-    "storyteller2.bookpage": StoryTeller2JournalModel,
+    "storyteller2.bookpage": StoryTeller2Model,
   });
 });
 
@@ -115,7 +156,7 @@ Hooks.on("init", () => {
   DocumentSheetConfig.registerSheet(
     JournalEntryPage,
     "storyteller2",
-    StoryTeller2JournalPageSheet,
+    StoryTeller2PageSheet,
     {
       types: ["storyteller2.bookpage"],
       makeDefault: false,
@@ -137,7 +178,7 @@ function getBookHeight() {
 }
 
 Hooks.on("ready", () => {
-  game.StoryTeller2Journal.registerAddonSheet({
+  game.StoryTeller2.registerAddonSheet({
     /* Unique key, must not overlap with other keys. It is used to access the object. */
     key: "StorySheet",
     /* The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed. */
@@ -146,16 +187,7 @@ Hooks.on("ready", () => {
     label: "TYPES.STORY_TELLER2.StorySheet",
   });
 
-  game.StoryTeller2Journal.registerAddonSheet({
-    /* Unique key, must not overlap with other keys. It is used to access the object. */
-    key: "clean",
-    /* The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed. */
-    sheet: SingleSheetMinimal,
-    /* Key-identifier of the string for translation. */
-    label: "TYPES.STORY_TELLER2.SingleSheetClean",
-  });
-
-  game.StoryTeller2Journal.registerAddonSheet({
+  game.StoryTeller2.registerAddonSheet({
     /* Unique key, must not overlap with other keys. It is used to access the object. */
     key: "minimal",
     /* The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed. */
@@ -191,8 +223,8 @@ Hooks.on("renderJournalSheet", (app, [html], context) => {
 
 Hooks.on("init", () => {
   registerSettings();
-  game.StoryTeller2Journal = new StoryTeller2Journal();
-  game.StoryTeller2Journal.init();
+  game.StoryTeller2 = new StoryTeller2();
+  game.StoryTeller2.init();
 });
 
 Hooks.once("init", function () {
@@ -273,3 +305,5 @@ Handlebars.registerHelper("getDontOpen", function () {
   }
   return addClass;
 });
+
+export const SHEET_TYPES = Array.from(Object.values(StoryTeller2.SHEET_TYPES));
