@@ -141,6 +141,12 @@ export class StorySheet extends JournalSheet {
       //element.addEventListener("click", function (event) {
       element.addEventListener("click", (event) => {
         var pageId = event.currentTarget?.dataset?.pageId;
+
+        /* this is so that the LANDSCAPE pages open on the correct odd/even group
+        within the array, ESPECIALLY if the page is at the end of the array */
+        if (pageId % 2 == 0) {
+          pageId = page--;
+        }
         this.goToPage(pageId);
       });
     });
@@ -179,6 +185,7 @@ export class StorySheet extends JournalSheet {
       */
 
       this.stylePageTurnButtons(newPageNumber, totalPages);
+      //setPage(data._id, page);
     });
   }
 
@@ -220,6 +227,9 @@ export class StorySheet extends JournalSheet {
   /** @inheritdoc */
   async close(options = {}) {
     let el = this.element;
+    let pageNumberToSave =
+      this.pageFlipElement?.flipController?.currentPage?.element
+        ?.classList?.[2];
     super.close(options);
     return new Promise((resolve) => {
       el.fadeOut(200, () => {
