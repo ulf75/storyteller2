@@ -95,7 +95,7 @@ export class StorySheet extends JournalSheet {
     let data = this.getData().data;
     let startPage = data.pages.length >= 1 ? 2 : 1;
 
-    let savedPage = getPage(data._id);
+    let savedPage = getPage(data._id) ?? 0;
     if (savedPage > data.pages.length) {
       savedPage = data.pages.length - 1;
     }
@@ -106,6 +106,7 @@ export class StorySheet extends JournalSheet {
         width: jepWidth, // getBookWidth(), // bookWidth,  // 550, // base page width
         height: jepHeight, //getBookHeight(), // bookHeight, //733, // base page height
         size: "fixed",
+        startPage: savedPage ?? 0,
         useMouseEvents: false,
         showPageCorners: false,
         maxShadowOpacity: 0.5, // Half shadow intensity
@@ -113,8 +114,7 @@ export class StorySheet extends JournalSheet {
         clickEventClasses: [
           "storyteller2-page-entry-nav",
           "journal-entry-pages-nav",
-          "page-title",
-        ],
+        ], //"page-title",
       }
     );
 
@@ -126,19 +126,13 @@ export class StorySheet extends JournalSheet {
       );
     }
 
-    this.pageFlipElement.flip(0);
-
-    if (options.pageId != undefined) {
-      //this.goToPage(options.pageId);
-    }
     var totalPages = this.pageFlipElement.pages.pages.length;
-    this.stylePageTurnButtons(0, totalPages);
+    this.stylePageTurnButtons(savedPage, totalPages);
 
     var journalEntries = document.querySelectorAll(
       ".page-num.num-start ol li.level1"
     );
     journalEntries.forEach((element) => {
-      //element.addEventListener("click", function (event) {
       element.addEventListener("click", (event) => {
         var pageId = event.currentTarget?.dataset?.pageId;
 
@@ -154,51 +148,40 @@ export class StorySheet extends JournalSheet {
     this.pageFlipElement.on("flip", (e) => {
       // callback code
       var newPageNumber = e.data;
-
-      // total pages in the Table of Contents(NOT the book array!!!)
-      /*
-      var totalPages = document.querySelectorAll(
-        ".journal-entry-pages .pagelookup li"
-      );
-      */
       var totalPages = this.pageFlipElement.pages.pages.length;
 
-      let count = totalPages?.length;
-      let ajustednewPageNumber =
-        newPageNumber != 0 && !(newPageNumber > count)
-          ? newPageNumber - 1
-          : newPageNumber;
-
-      var pageState = "toc";
-      var pageClass = ajustednewPageNumber;
-      if (newPageNumber === 0) {
-        pageState = "toc";
-        pageClass = "num-start";
-      }
-      /*
-      if (newPageNumber === count) {
-        pageState = "last";
-      }
-      if (newPageNumber > 0 && newPageNumber < count) {
-        pageState = "middle";
-      }
-      */
-
       this.stylePageTurnButtons(newPageNumber, totalPages);
-      //setPage(data._id, page);
+      setPage(data._id, newPageNumber);
     });
   }
 
   stylePageTurnButtons(pageNumber, totalPages) {
-    let rightArrow = document.querySelector(
-      ".page-num .journal-page-arrow-right.next" //journal-page-arrow-right.next
+    let rightArrow = document.querySelectorAll(
+      ".page-num .journal-page-arrow-right.next"
     );
+
     if (rightArrow != null) {
-      rightArrow.style.display = "block";
+      if ((pageNumber == undefined || pageNumber === 0) && totalPages === 1) {
+        rightArrow[0].style.display = "none";
+        return;
+      }
       if (pageNumber + 2 >= totalPages) {
-        rightArrow.style.display = "none";
+        Array.from(rightArrow)
+          .slice(-1)
+          .forEach((element) => {
+            element.style.display = "none";
+          });
+        //rightArrow.slice(-1).style.display = "none";
+
+        /*
+        rightArrow.forEach((element) => {
+          element.style.display = "none";
+          console.log(`Right Arrow Style: ${element.style.display}`);
+        });
+        */
       }
     }
+    console.log(`Styling Page Buttons, page: ${pageNumber} of ${totalPages}.`);
 
     return;
   }
@@ -227,9 +210,8 @@ export class StorySheet extends JournalSheet {
   /** @inheritdoc */
   async close(options = {}) {
     let el = this.element;
-    let pageNumberToSave =
-      this.pageFlipElement?.flipController?.currentPage?.element
-        ?.classList?.[2];
+    let pageNumberToSave = this.pageFlipElement.pages?.currentPageIndex ?? 0;
+    setPage(this.getData().data._id, pageNumberToSave);
     super.close(options);
     return new Promise((resolve) => {
       el.fadeOut(200, () => {
@@ -250,11 +232,12 @@ export class StorySheet extends JournalSheet {
     let targetPage = document.querySelector(
       `.story-sheet .page-num .journal-entry-page[data-page-id="${pageId}"]`
     );
+
     // since the handlebars starts at ZERO, we need to add 1 to each
     let targetPageNum = Number(targetPage.dataset.entryIndex) + 1;
     console.log(`going to page: ${targetPageNum}, Journal Entry id: ${pageId}`);
 
-    this.pageFlipElement.flip(targetPageNum); //ToPage(targetPageNum);
+    this.pageFlipElement.flip(targetPageNum, "top"); //ToPage(targetPageNum);
 
     var totalPages = this.pageFlipElement.pages.pages.length;
     this.stylePageTurnButtons(targetPageNum, totalPages);
@@ -279,8 +262,8 @@ async function setPage(id, page) {
 
 function getPage(id) {
   let pages = game.settings.get(`${MODULE_ID}`, "pages");
-  if (pages[id] === 0) {
-    return 1;
+  if (pages[id] === undefined) {
+    return 0;
   }
 
   return pages[id];

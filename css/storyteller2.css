@@ -3,6 +3,32 @@
 @import "themes/newspaper.css";
 @import "themes/fullscreen.css";
 
+app.window-app.sheet.story-sheet
+  + .journal-sheet.journal-entry-page
+  .journal-page-content::-webkit-scrollbar {
+  width: 20px;
+}
+
+app.window-app.sheet.story-sheet
+  + .journal-sheet.journal-entry-page
+  .journal-page-content::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+app.window-app.sheet.story-sheet
+  + .journal-sheet.journal-entry-page
+  .journal-page-content::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+app.window-app.sheet.story-sheet
+  + .journal-sheet.journal-entry-page
+  .journal-page-content::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf; /**e1d3ac*/
+}
+
 .app.window-app.sheet.story-sheet + .journal-sheet.journal-entry-page {
   background: url(../img/old_book/editor.webp);
   background-size: 100% 100%;
@@ -92,6 +118,7 @@
 }
 .app.story-sheet .journal-entry-page.pages-content .content-inner {
   padding: 6%;
+  height: 100%;
 }
 
 /* Styling for the tabs */
@@ -122,10 +149,6 @@ nav.storyteller-nav.tabs {
   padding: 0 0.34% 0.34% 0.34%;
   /* hack */
   height: 0;
-}
-
-.window-app.story-sheet .window-content form {
-  height: 100%;
 }
 
 .story-sheet:before {
@@ -193,7 +216,7 @@ nav.storyteller-nav.tabs {
   font-weight: 600;
   opacity: 0.9;
   color: #48392e;
-  height: 100%;
+  height: 88%;
 }
 
 .story-sheet .page-num.num-start {
@@ -207,7 +230,8 @@ nav.storyteller-nav.tabs {
   font-weight: 600;
   opacity: 0.9;
   color: #48392e;
-  height: 100%;
+  height: 88%;
+  overflow-y: scroll;
 }
 
 .story-sheet .journal-page-content img {
@@ -229,6 +253,13 @@ nav.storyteller-nav.tabs {
 .story-sheet .page-num.num-start .pages-list .headings {
   display: none;
 }
+.story-sheet .page-num.num-start .pages-list {
+  overflow-y: scroll;
+  height: 82%;
+  max-height: 82%;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
 
 .story-sheet .page-num.num-start {
   background-image: url(../img/old_book/right-page.webp);
@@ -237,7 +268,8 @@ nav.storyteller-nav.tabs {
 
 .story-sheet .page-num.num-start .journal-entry-page.pages-content {
   width: 100%;
-  height: 92%;
+  height: 94%;
+  max-height: 94%;
 }
 
 .story-sheet .page-num.num-start input {
@@ -266,6 +298,7 @@ nav.storyteller-nav.tabs {
 
 .story-sheet .journal-entry-page.text {
   padding: 1.34% 4.34% 0.34% 4.34%;
+  height: 100%;
 }
 
 .story-sheet .journal-entry-page.image,

@@ -33,32 +33,7 @@ class StoryTeller2 {
   }
 
   _activateSocketListeners(socket) {
-    socket.on("module.storyteller2journal", this._setPageToOpen.bind(this));
-  }
-
-  registerObjects2(types, labels) {
-    for (let [k, v] of Object.entries(labels)) {
-      if (k === "default") continue;
-      /*
-      game.StoryTeller2.registerAddonSheet({
-         
-        key: "StorySheet",
-       
-        sheet: StorySheet,
-        
-        label: "TYPES.STORY_TELLER2.StorySheet",
-      });
-      */
-
-      game.StoryTeller2.registerAddonSheet({
-        /* Unique key, must not overlap with other keys. It is used to access the object. */
-        key: "StorySheet",
-        /* The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed. */
-        sheet: StorySheet,
-        /* Key-identifier of the string for translation. */
-        label: "TYPES.STORY_TELLER2.StorySheet",
-      });
-    }
+    socket.on("module.StoryTeller2", this._setPageToOpen.bind(this));
   }
 
   registerObjects(types, labels) {
@@ -82,11 +57,19 @@ class StoryTeller2 {
       return;
     }
 
-    let pages = game.settings.get("storyteller2journal", "pages");
+    let pages = game.settings.get("StoryTeller2", "pages");
     pages[data.id] = data.page;
-    await game.settings.set("storyteller2journal", "pages", pages);
+    await game.settings.set("StoryTeller2", "pages", pages);
   }
 
+  /*
+   *
+   *   Register each sheet from the array.
+   *
+   *   @param key: "StorySheet",  -- Unique key, must not overlap with other keys. It is used to access the object.
+   *   @param sheet: StorySheet, -- The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed.
+   *   @param label: "StoryTeller2.StorySheet", -- Key-identifier of the string for translation.
+   */
   registerAddonSheet(s) {
     let types = {};
     let labels = {};
@@ -95,9 +78,6 @@ class StoryTeller2 {
     labels[s.key] = s.label;
 
     this.registerObjects(types, labels);
-
-    //FantasyBookJournal.types[s.key] = s.sheet
-    //FantasyBookJournal.labels[s.key] = s.label
   }
 }
 
@@ -148,20 +128,23 @@ class StoryTeller2PageSheet extends JournalTextPageSheet {
 
 Hooks.on("init", () => {
   Object.assign(CONFIG.JournalEntryPage.dataModels, {
-    "storyteller2.bookpage": StoryTeller2Model,
+    "StoryTeller2.bookpage": StoryTeller2Model,
   });
-});
-
-Hooks.on("init", () => {
+  /*
   DocumentSheetConfig.registerSheet(
     JournalEntryPage,
     "storyteller2",
     StoryTeller2PageSheet,
     {
-      types: ["storyteller2.bookpage"],
+      types: ["StoryTeller2.bookpage"],
       makeDefault: false,
     }
   );
+  */
+
+  registerSettings();
+  game.StoryTeller2 = new StoryTeller2();
+  game.StoryTeller2.init();
 });
 //`journal.pages.some(p => p.type === 'fantasybookjournal.bookpage')` basic way to check if a journal has one of your pages
 //Hooks.on("renderStoryTeller2JournalPageSheet" () =>{
@@ -184,21 +167,23 @@ Hooks.on("ready", () => {
     /* The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed. */
     sheet: StorySheet,
     /* Key-identifier of the string for translation. */
-    label: "TYPES.STORY_TELLER2.StorySheet",
+    label: "StoryTeller2.StorySheet",
   });
 
+  /* 
   game.StoryTeller2.registerAddonSheet({
-    /* Unique key, must not overlap with other keys. It is used to access the object. */
     key: "minimal",
-    /* The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed. */
+    
     sheet: SingleSheetMinimal,
-    /* Key-identifier of the string for translation. */
-    label: "TYPES.STORY_TELLER2.SingleSheetMinimal",
+    
+    label: "StoryTeller2.SingleSheetMinimal",
   });
+  */
   console.log("Story Teller 2 Journal | Ready");
 });
 
 Hooks.on("renderJournalSheet", (app, [html], context) => {
+  /*
   const isBookJournalSheet = app.document.getFlag(
     "storyteller2",
     "isBookJournal"
@@ -219,6 +204,7 @@ Hooks.on("renderJournalSheet", (app, [html], context) => {
     }
   }
   //app.setPosition({ scale: 1.1 });
+  */
 });
 
 Hooks.on("init", () => {
@@ -233,8 +219,8 @@ Hooks.once("init", function () {
 
 function registerSettings() {
   game.settings.register(`${MODULE_ID}`, "size", {
-    name: game.i18n.localize("storyteller2.Settings.Size"),
-    hint: game.i18n.localize("storyteller2.Settings.SizeHint"),
+    name: game.i18n.localize("StoryTeller2.Settings.Size"),
+    hint: game.i18n.localize("StoryTeller2.Settings.SizeHint"),
     scope: "client",
     type: Number,
     choices: {
@@ -248,8 +234,8 @@ function registerSettings() {
   });
 
   game.settings.register(`${MODULE_ID}`, "bookOpenSound", {
-    name: game.i18n.localize("STORYTELLER.BookOpenSound"),
-    hint: game.i18n.localize("STORYTELLER.BookOpenSoundHint"),
+    name: game.i18n.localize("StoryTeller2.Settings.BookOpenSound"),
+    hint: game.i18n.localize("StoryTeller2.Settings.BookOpenSoundHint"),
     scope: "client",
     type: Boolean,
     default: true,
@@ -263,12 +249,13 @@ function registerSettings() {
     config: false,
   });
 
+  /*
   game.settings.register(`${MODULE_ID}`, "background", {
     name: game.i18n.localize(
-      "STORYTELLER_ADDON_SINGLE.Settings.ImageBackground"
+      "StoryTeller2.Settings.ImageBackground"
     ),
     hint: game.i18n.localize(
-      "STORYTELLER_ADDON_SINGLE.Settings.ImageBackgroundHint"
+      "StoryTeller2.Settings.ImageBackgroundHint"
     ),
     scope: "world",
     type: Boolean,
@@ -278,16 +265,17 @@ function registerSettings() {
 
   game.settings.register(`${MODULE_ID}`, "dontOpen", {
     name: game.i18n.localize(
-      "STORYTELLER_ADDON_SINGLE.Settings.DontOpenImages"
+      "StoryTeller2.Settings.DontOpenImages"
     ),
     hint: game.i18n.localize(
-      "STORYTELLER_ADDON_SINGLE.Settings.DontOpenImagesHint"
+      "StoryTeller2.Settings.DontOpenImagesHint"
     ),
     scope: "world",
     type: Boolean,
     default: true,
     config: true,
   });
+  */
 }
 
 Handlebars.registerHelper("offset", function (value) {

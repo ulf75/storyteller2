@@ -1419,16 +1419,19 @@ class UI {
                 // TODO - add if(any clickEventClasses)
                 if (this.app.getSettings().clickEventClasses.some) {
                     var targetClassList = Array.from(e.target.classList);
-                    if (targetClassList.some((value) => value.includes('prev'))) {
+                    if (targetClassList.some((value) => value.includes('prev')) && e.button === 0) {
                         this.app.flipPrev();
                         e.preventDefault();
                         return;
                     }
-                    if (targetClassList.some((value) => value.includes('next'))) {
+                    if (targetClassList.some((value) => value.includes('next')) && e.button === 0) {
                         this.app.flipNext();
                         e.preventDefault();
                         return;
                     }
+                }
+                if (this.app.getSettings().clickEventClasses.some && e.button != 0) {
+                    return;
                 }
                 const pos = this.getMousePos(e.clientX, e.clientY);
                 this.app.startUserTouch(pos);
