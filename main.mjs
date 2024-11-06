@@ -8,8 +8,8 @@ export const MODULE_ID = "storyteller2";
 
 class StoryTeller2 {
   static SHEET_TYPES = {
-    default: JournalSheet,
-    story: StorySheet,
+    default: "JournalSheet",
+    story: "StorySheet",
   };
 
   static SHEET_LABELS = {
