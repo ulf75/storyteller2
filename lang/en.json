@@ -31,18 +31,16 @@
   "StoryTeller2.Journal": "Journals",
   "StoryTeller2.Stories": "Stories",
   "StoryTeller2.ChangeImage": "Click here to change image",
-  "StoryTeller2.CantCreateFolder": "Folder creation is not currently supported, wait for future updates! Thanks for understanding!",
-  "StoryTeller2.BookOpenSound": "Enable book opening sound",
-  "StoryTeller2.BookOpenSoundHint": "For each user individually",
+
   "StoryTeller2.StoryName": "Story name:",
 
   "StoryTeller2.Settings.Theme": "Change the style of the story",
   "StoryTeller2.Settings.ThemeHint": "Changes the theme for all players",
   "StoryTeller2.Settings.ThemeBook": "Book",
   "StoryTeller2.Settings.ThemeNewspaper": "Newspaper",
+
   "StoryTeller2.Settings.Size": "The size of the story on the screen",
   "StoryTeller2.Settings.SizeHint": "100% takes up almost the entire screen height, 80% takes up no more than 80% of the screen height",
-
-  "StoryTeller2.Settings.EnableScroll": "Enables scroll support inside the book",
-  "StoryTeller2.Settings.EnableScrollHint": "BETA. It doesn't look good, but sometimes functionality is more important than beauty. Allows you to scroll the text inside the page"
+  "StoryTeller2.Settings.BookOpenSound": "Enable book opening sound",
+  "StoryTeller2.Settings.BookOpenSoundHint": "For each user individually"
 }

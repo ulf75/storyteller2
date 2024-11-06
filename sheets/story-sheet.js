@@ -10,12 +10,6 @@ export class StorySheet extends JournalSheet {
   static classes = ["sheet", "story-sheet"];
 
   static get defaultOptions() {
-    /*
-    if (game.settings.get(`${MODULE_ID}`, "enableScroll")) {
-      this.classes.push("scrollable");
-    }
-      */
-
     return foundry.utils.mergeObject(super.defaultOptions, {
       baseApplication: "JournalSheet",
       classes: this.classes,
@@ -114,7 +108,7 @@ export class StorySheet extends JournalSheet {
         clickEventClasses: [
           "storyteller2-page-entry-nav",
           "journal-entry-pages-nav",
-        ], //"page-title",
+        ],
       }
     );
 
@@ -171,18 +165,8 @@ export class StorySheet extends JournalSheet {
           .forEach((element) => {
             element.style.display = "none";
           });
-        //rightArrow.slice(-1).style.display = "none";
-
-        /*
-        rightArrow.forEach((element) => {
-          element.style.display = "none";
-          console.log(`Right Arrow Style: ${element.style.display}`);
-        });
-        */
       }
     }
-    console.log(`Styling Page Buttons, page: ${pageNumber} of ${totalPages}.`);
-
     return;
   }
 
@@ -197,7 +181,7 @@ export class StorySheet extends JournalSheet {
   async _onShowPlayers(event) {
     let id = this.getData().data._id;
     // Save current page to global storage
-    game.socket.emit("module.storyteller", {
+    game.socket.emit("module.StoryTeller2", {
       action: "setPageToOpen",
       id: id,
       page: getPage(id),

@@ -37,13 +37,13 @@ class StoryTeller2 {
   }
 
   registerObjects(types, labels) {
-    for (let [k, v] of Object.entries(labels)) {
-      if (k === "default") continue;
+    for (let [className, localizationKey] of Object.entries(labels)) {
+      if (className === "default") continue;
 
-      Journal.registerSheet("journals", types[k], {
+      Journal.registerSheet("journals", types[className], {
         types: ["base"],
         makeDefault: false,
-        label: game.i18n.localize(v),
+        label: game.i18n.localize(localizationKey),
       });
     }
 
@@ -127,10 +127,11 @@ class StoryTeller2PageSheet extends JournalTextPageSheet {
 }
 
 Hooks.on("init", () => {
+  /*
   Object.assign(CONFIG.JournalEntryPage.dataModels, {
     "StoryTeller2.bookpage": StoryTeller2Model,
   });
-  /*
+
   DocumentSheetConfig.registerSheet(
     JournalEntryPage,
     "storyteller2",
@@ -141,10 +142,6 @@ Hooks.on("init", () => {
     }
   );
   */
-
-  registerSettings();
-  game.StoryTeller2 = new StoryTeller2();
-  game.StoryTeller2.init();
 });
 //`journal.pages.some(p => p.type === 'fantasybookjournal.bookpage')` basic way to check if a journal has one of your pages
 //Hooks.on("renderStoryTeller2JournalPageSheet" () =>{
@@ -162,11 +159,8 @@ function getBookHeight() {
 
 Hooks.on("ready", () => {
   game.StoryTeller2.registerAddonSheet({
-    /* Unique key, must not overlap with other keys. It is used to access the object. */
     key: "StorySheet",
-    /* The class that implements the settings for the new journal. You don't need to create an instance, the class description itself is passed. */
     sheet: StorySheet,
-    /* Key-identifier of the string for translation. */
     label: "StoryTeller2.StorySheet",
   });
 
@@ -211,6 +205,7 @@ Hooks.on("init", () => {
   registerSettings();
   game.StoryTeller2 = new StoryTeller2();
   game.StoryTeller2.init();
+  CONFIG.debug.hooks = true;
 });
 
 Hooks.once("init", function () {
