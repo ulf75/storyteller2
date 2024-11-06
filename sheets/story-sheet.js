@@ -94,33 +94,28 @@ export class StorySheet extends JournalSheet {
       savedPage = data.pages.length - 1;
     }
 
-    this.pageFlipElement = new PageFlip(
-      document.getElementById("story-" + data._id),
-      {
-        width: jepWidth, // getBookWidth(), // bookWidth,  // 550, // base page width
-        height: jepHeight, //getBookHeight(), // bookHeight, //733, // base page height
-        size: "fixed",
-        startPage: savedPage ?? 0,
-        useMouseEvents: false,
-        showPageCorners: false,
-        maxShadowOpacity: 0.5, // Half shadow intensity
-        showCover: true,
-        clickEventClasses: [
-          "storyteller2-page-entry-nav",
-          "journal-entry-pages-nav",
-        ],
-      }
-    );
+    this.Pager = new PageFlip(document.getElementById("story-" + data._id), {
+      width: jepWidth, // getBookWidth(), // bookWidth,  // 550, // base page width
+      height: jepHeight, //getBookHeight(), // bookHeight, //733, // base page height
+      size: "fixed",
+      startPage: savedPage ?? 0,
+      useMouseEvents: false,
+      showPageCorners: false,
+      maxShadowOpacity: 0.5, // Half shadow intensity
+      showCover: true,
+      clickEventClasses: [
+        "storyteller2-page-entry-nav",
+        "journal-entry-pages-nav",
+      ],
+    });
 
-    if (this.pageFlipElement.pages == null) {
-      this.pageFlipElement.loadFromHTML(document.querySelectorAll(".page-num"));
+    if (this.Pager.pages == null) {
+      this.Pager.loadFromHTML(document.querySelectorAll(".page-num"));
     } else {
-      this.pageFlipElement.updateFromHtml(
-        document.querySelectorAll(".page-num")
-      );
+      this.Pager.updateFromHtml(document.querySelectorAll(".page-num"));
     }
 
-    var totalPages = this.pageFlipElement.pages.pages.length;
+    var totalPages = this.Pager.pages.pages.length;
     this.stylePageTurnButtons(savedPage, totalPages);
 
     var journalEntries = document.querySelectorAll(
@@ -139,10 +134,10 @@ export class StorySheet extends JournalSheet {
       });
     });
 
-    this.pageFlipElement.on("flip", (e) => {
+    this.Pager.on("flip", (e) => {
       // callback code
       var newPageNumber = e.data;
-      var totalPages = this.pageFlipElement.pages.pages.length;
+      var totalPages = this.Pager.pages.pages.length;
 
       this.stylePageTurnButtons(newPageNumber, totalPages);
       setPage(data._id, newPageNumber);
@@ -194,7 +189,7 @@ export class StorySheet extends JournalSheet {
   /** @inheritdoc */
   async close(options = {}) {
     let el = this.element;
-    let pageNumberToSave = this.pageFlipElement.pages?.currentPageIndex ?? 0;
+    let pageNumberToSave = this.Pager.pages?.currentPageIndex ?? 0;
     setPage(this.getData().data._id, pageNumberToSave);
     super.close(options);
     return new Promise((resolve) => {
@@ -221,9 +216,9 @@ export class StorySheet extends JournalSheet {
     let targetPageNum = Number(targetPage.dataset.entryIndex) + 1;
     console.log(`going to page: ${targetPageNum}, Journal Entry id: ${pageId}`);
 
-    this.pageFlipElement.flip(targetPageNum, "top"); //ToPage(targetPageNum);
+    this.Pager.flip(targetPageNum, "top"); //ToPage(targetPageNum);
 
-    var totalPages = this.pageFlipElement.pages.pages.length;
+    var totalPages = this.Pager.pages.pages.length;
     this.stylePageTurnButtons(targetPageNum, totalPages);
   }
 }

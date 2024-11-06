@@ -13,7 +13,7 @@ export function registerHotkeys() {
         SHEET_TYPES &&
         SHEET_TYPES.includes(ui.activeWindow.constructor.name)
       ) {
-        ui.activeWindow.pageFlipElement.flipPrev();
+        ui.activeWindow.Pager.flipPrev();
       }
     },
   });
@@ -29,7 +29,7 @@ export function registerHotkeys() {
         SHEET_TYPES &&
         SHEET_TYPES.includes(ui.activeWindow.constructor.name)
       ) {
-        ui.activeWindow.pageFlipElement.flipNext();
+        ui.activeWindow.Pager.flipNext();
       }
     },
   });
