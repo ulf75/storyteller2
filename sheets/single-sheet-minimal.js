@@ -1,4 +1,4 @@
-import { PageFlip } from "../scripts/page-flip.module.mjs";
+import { PageFlip } from "../scripts/pageflip/page-flip.module.mjs";
 import { MODULE_ID } from "../main.mjs";
 
 const bookSizeCorrection = 1;

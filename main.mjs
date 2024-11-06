@@ -81,6 +81,7 @@ class StoryTeller2 {
   }
 }
 
+/*
 class StoryTeller2Model extends foundry.abstract.TypeDataModel {
   static LOCALIZATION_PREFIXES = ["StoryTeller2.path"];
 
@@ -100,6 +101,7 @@ class StoryTeller2Model extends foundry.abstract.TypeDataModel {
     this.nSteps = this.steps.length;
   }
 }
+  
 
 class StoryTeller2PageSheet extends JournalTextPageSheet {
   get template() {
@@ -125,37 +127,7 @@ class StoryTeller2PageSheet extends JournalTextPageSheet {
     return context;
   }
 }
-
-Hooks.on("init", () => {
-  /*
-  Object.assign(CONFIG.JournalEntryPage.dataModels, {
-    "StoryTeller2.bookpage": StoryTeller2Model,
-  });
-
-  DocumentSheetConfig.registerSheet(
-    JournalEntryPage,
-    "storyteller2",
-    StoryTeller2PageSheet,
-    {
-      types: ["StoryTeller2.bookpage"],
-      makeDefault: false,
-    }
-  );
-  */
-});
-//`journal.pages.some(p => p.type === 'fantasybookjournal.bookpage')` basic way to check if a journal has one of your pages
-//Hooks.on("renderStoryTeller2JournalPageSheet" () =>{
-//});
-
-function getBookWidth() {
-  let height = getBookHeight();
-  return (bookWidth / bookHeight) * height;
-}
-
-function getBookHeight() {
-  let bookSize = game.settings.get(`${MODULE_ID}`, "size") / 100;
-  return window.innerHeight * bookSize * bookSizeCorrection;
-}
+*/
 
 Hooks.on("ready", () => {
   game.StoryTeller2.registerAddonSheet({
@@ -175,9 +147,9 @@ Hooks.on("ready", () => {
   */
   console.log("Story Teller 2 Journal | Ready");
 });
-
+/*
 Hooks.on("renderJournalSheet", (app, [html], context) => {
-  /*
+ 
   const isBookJournalSheet = app.document.getFlag(
     "storyteller2",
     "isBookJournal"
@@ -198,8 +170,9 @@ Hooks.on("renderJournalSheet", (app, [html], context) => {
     }
   }
   //app.setPosition({ scale: 1.1 });
-  */
+  
 });
+*/
 
 Hooks.on("init", () => {
   registerSettings();

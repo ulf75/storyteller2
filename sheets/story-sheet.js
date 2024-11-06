@@ -1,5 +1,5 @@
 import { MODULE_ID } from "../main.mjs";
-import { PageFlip } from "../scripts/page-flip.module.mjs";
+import { PageFlip } from "../scripts/pageflip/page-flip.module.mjs";
 
 const bookSizeCorrection = 1;
 const bookWidth = 1390;
@@ -95,8 +95,8 @@ export class StorySheet extends JournalSheet {
     }
 
     this.Pager = new PageFlip(document.getElementById("story-" + data._id), {
-      width: jepWidth, // getBookWidth(), // bookWidth,  // 550, // base page width
-      height: jepHeight, //getBookHeight(), // bookHeight, //733, // base page height
+      width: jepWidth,
+      height: jepHeight,
       size: "fixed",
       startPage: savedPage ?? 0,
       useMouseEvents: false,

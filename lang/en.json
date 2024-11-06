@@ -1,30 +1,9 @@
 {
-  "StoryTeller2Journal": {
-    "path": {
-      "FIELDS": {
-        "description": {
-          "hint": "Behavior hint",
-          "label": "Behavior label"
-        },
-        "img": {
-          "hint": "Behavior hint",
-          "label": "Behavior label"
-        },
-        "steps": {
-          "hint": "Behavior hint",
-          "label": "Behavior label"
-        }
-      }
-    }
-  },
-  "JournalEntryPage.StoryTeller2.bookpage": "Story Teller 2 Journal Page",
   "StoryTeller2.SingleSheetClean": "Single sheet (clean)",
   "StoryTeller2.SingleSheetMinimal": "Single sheet (minimal)",
   "StoryTeller2.BaseJournalEntry": "Default sheet",
   "StoryTeller2.StorySheet": "Story sheet",
   "StoryTeller2.FullscreenStorySheet": "(BETA) Fullscreen story",
-
-  "JOURNAL.ActionConfigure": "Configure",
 
   "StoryTeller2.CopyID": "Copy story macros",
   "StoryTeller2.CopyIDMessage": "The macro for calling the story was copied to the clipboard.",
