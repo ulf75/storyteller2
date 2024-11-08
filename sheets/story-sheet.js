@@ -82,11 +82,13 @@ export class StorySheet extends JournalSheet {
   async _render(force, options = {}) {
     this.sound();
     await super._render(force, options);
-    var journalEntryPages = document.querySelector(".journal-entry-pages");
-    var jepHeight = journalEntryPages.offsetHeight;
-    var jepWidth = journalEntryPages.offsetWidth / 2;
+    console.log("Story Teller 2 | Rendering Story Sheet");
+    //var journalEntryPages = document.querySelector(".journal-entry-pages");
+    //var jepHeight = journalEntryPages.offsetHeight;
+    //var jepWidth = journalEntryPages.offsetWidth / 2;
 
     let data = this.getData().data;
+    let storyId = data._id;
     let startPage = data.pages.length >= 1 ? 2 : 1;
 
     let savedPage = getPage(data._id) ?? 0;
@@ -94,20 +96,7 @@ export class StorySheet extends JournalSheet {
       savedPage = data.pages.length - 1;
     }
 
-    this.Pager = new PageFlip(document.getElementById("story-" + data._id), {
-      width: jepWidth,
-      height: jepHeight,
-      size: "fixed",
-      startPage: savedPage ?? 0,
-      useMouseEvents: false,
-      showPageCorners: false,
-      maxShadowOpacity: 0.5, // Half shadow intensity
-      showCover: true,
-      clickEventClasses: [
-        "storyteller2-page-entry-nav",
-        "journal-entry-pages-nav",
-      ],
-    });
+    this.Pager = this.getPager(storyId, savedPage);
 
     if (this.Pager.pages == null) {
       this.Pager.loadFromHTML(document.querySelectorAll(".page-num"));
@@ -141,6 +130,27 @@ export class StorySheet extends JournalSheet {
 
       this.stylePageTurnButtons(newPageNumber, totalPages);
       setPage(data._id, newPageNumber);
+    });
+  }
+
+  getPager(storyId, savedPage) {
+    var journalEntryPages = document.querySelector(".journal-entry-pages");
+    var jepHeight = journalEntryPages.offsetHeight;
+    var jepWidth = journalEntryPages.offsetWidth / 2;
+
+    return new PageFlip(document.getElementById("story-" + storyId), {
+      width: jepWidth,
+      height: jepHeight,
+      size: "fixed",
+      startPage: savedPage ?? 0,
+      useMouseEvents: false,
+      showPageCorners: false,
+      maxShadowOpacity: 0.9, // Half shadow intensity
+      showCover: true,
+      clickEventClasses: [
+        "storyteller2-page-entry-nav",
+        "journal-entry-pages-nav",
+      ],
     });
   }
 
@@ -211,6 +221,10 @@ export class StorySheet extends JournalSheet {
     let targetPage = document.querySelector(
       `.story-sheet .page-num .journal-entry-page[data-page-id="${pageId}"]`
     );
+    if (!this.Pager) {
+      console.log("Story Teller 2 | Pager does not exist yet, creating");
+      var storyId = JournalSheet.document;
+    }
 
     // since the handlebars starts at ZERO, we need to add 1 to each
     let targetPageNum = Number(targetPage.dataset.entryIndex) + 1;

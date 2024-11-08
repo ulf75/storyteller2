@@ -235,15 +235,10 @@ nav.storyteller-nav.tabs {
   margin-top: 0.5em;
 }
 
-.story-sheet .page-num.num-start {
-  background-image: url(../img/old_book/right-page.webp);
-  background-size: 100% 100%;
-}
-
 .story-sheet .page-num.num-start .journal-entry-page.pages-content {
   width: 100%;
-  height: 90%;
-  max-height: 90%;
+  height: 92%;
+  max-height: 92%;
 }
 
 .story-sheet .page-num.num-start input {
@@ -251,9 +246,9 @@ nav.storyteller-nav.tabs {
   opacity: 0.9;
   color: #48392e;
   text-align: center;
-  height: 1.5em;
+  height: 2em;
   font-weight: 600;
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .story-sheet .page-num.num-start .create {

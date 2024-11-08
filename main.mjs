@@ -56,10 +56,15 @@ class StoryTeller2 {
     if (data.action !== "setPageToOpen" || data.id === "") {
       return;
     }
-
+    console.log(
+      `Story Teller 2 | _setPageToOpen called with action[${data.action}] and id[${data.id}] and page[${data.action}]`
+    );
     let pages = game.settings.get("StoryTeller2", "pages");
     pages[data.id] = data.page;
     await game.settings.set("StoryTeller2", "pages", pages);
+
+    //let story = game.journal.get(id)
+    //story.sheet.render(true)
   }
 
   /*
