@@ -180,6 +180,7 @@ export class StorySheet extends JournalSheet {
     if (formData.img === "") {
       formData.img = this.object.data.img;
     }
+    console.log("Story Teller 2 | Updating Story Sheet");
     return super._updateObject(event, formData);
   }
 
