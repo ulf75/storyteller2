@@ -9,6 +9,16 @@ export class StorySheet extends JournalSheet {
   pageFlipSoundURL = `modules/${MODULE_ID}/sounds/paper-flip.mp3`;
   static classes = ["sheet", "story-sheet"];
 
+  constructor(...args) {
+    super(...args);
+
+    console.log(
+      `Story Teller 2 | AppId: ${this.appId},  dataId: ${
+        this.getData().data._id
+      }`
+    );
+  }
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       baseApplication: "JournalSheet",
@@ -24,7 +34,7 @@ export class StorySheet extends JournalSheet {
 
   sound() {
     if (game.settings.get(`${MODULE_ID}`, "bookOpenSound")) {
-      AudioHelper.play(
+      foundry.audio.AudioHelper.play(
         {
           src: this.pageFlipSoundURL,
           volume: 0.8,
@@ -83,9 +93,6 @@ export class StorySheet extends JournalSheet {
     this.sound();
     await super._render(force, options);
     console.log("Story Teller 2 | Rendering Story Sheet");
-    //var journalEntryPages = document.querySelector(".journal-entry-pages");
-    //var jepHeight = journalEntryPages.offsetHeight;
-    //var jepWidth = journalEntryPages.offsetWidth / 2;
 
     let data = this.getData().data;
     let storyId = data._id;
@@ -99,15 +106,15 @@ export class StorySheet extends JournalSheet {
     this.Pager = this.getPager(storyId, savedPage);
 
     if (this.Pager.pages == null) {
-      this.Pager.loadFromHTML(document.querySelectorAll(".page-num"));
+      this.Pager.loadFromHTML(this.element[0].querySelectorAll(".page-num"));
     } else {
-      this.Pager.updateFromHtml(document.querySelectorAll(".page-num"));
+      this.Pager.updateFromHtml(this.element[0].querySelectorAll(".page-num"));
     }
 
     var totalPages = this.Pager.pages.pages.length;
     this.stylePageTurnButtons(savedPage, totalPages);
 
-    var journalEntries = document.querySelectorAll(
+    var journalEntries = this.element[0].querySelectorAll(
       ".page-num.num-start ol li.level1"
     );
     journalEntries.forEach((element) => {
@@ -134,7 +141,9 @@ export class StorySheet extends JournalSheet {
   }
 
   getPager(storyId, savedPage) {
-    var journalEntryPages = document.querySelector(".journal-entry-pages");
+    var journalEntryPages = this.element[0].querySelector(
+      ".journal-entry-pages"
+    );
     var jepHeight = journalEntryPages.offsetHeight;
     var jepWidth = journalEntryPages.offsetWidth / 2;
 
@@ -155,7 +164,7 @@ export class StorySheet extends JournalSheet {
   }
 
   stylePageTurnButtons(pageNumber, totalPages) {
-    let rightArrow = document.querySelectorAll(
+    let rightArrow = this.element[0].querySelectorAll(
       ".page-num .journal-page-arrow-right.next"
     );
 
@@ -185,7 +194,11 @@ export class StorySheet extends JournalSheet {
   }
 
   async _onShowPlayers(event) {
-    let id = this.getData().data._id;
+    //let id = this.getData().data._id;
+    let currentPageNumber = ui.activeWindow?.Pager?.pages?.currentPageIndex;
+    let id =
+      ui.activeWindow.Pager?.pages?.getPage(currentPageNumber)?.element
+        ?.firstElementChild?.dataset.pageId;
     // Save current page to global storage
     game.socket.emit("module.StoryTeller2", {
       action: "setPageToOpen",
@@ -193,7 +206,8 @@ export class StorySheet extends JournalSheet {
       page: getPage(id),
     });
 
-    return super._onShowPlayers(event);
+    let popup = await super._onShowPlayers(event);
+    return popup;
   }
 
   /** Меняем анимацию скрытия книги */
@@ -202,6 +216,7 @@ export class StorySheet extends JournalSheet {
     let el = this.element;
     let pageNumberToSave = this.Pager.pages?.currentPageIndex ?? 0;
     setPage(this.getData().data._id, pageNumberToSave);
+    this.Pager.destroy();
     super.close(options);
     return new Promise((resolve) => {
       el.fadeOut(200, () => {
@@ -219,12 +234,21 @@ export class StorySheet extends JournalSheet {
   }
 
   goToPage(pageId) {
-    let targetPage = document.querySelector(
+    let targetPage = this.element[0].querySelector(
       `.story-sheet .page-num .journal-entry-page[data-page-id="${pageId}"]`
     );
     if (!this.Pager) {
       console.log("Story Teller 2 | Pager does not exist yet, creating");
-      var storyId = JournalSheet.document;
+      var storyId = this.getData().data._id;
+      this.Pager = this.getPager(storyId, 0);
+
+      if (this.Pager.pages == null) {
+        this.Pager.loadFromHTML(this.element[0].querySelectorAll(".page-num"));
+      } else {
+        this.Pager.updateFromHtml(
+          this.element[0].querySelectorAll(".page-num")
+        );
+      }
     }
 
     // since the handlebars starts at ZERO, we need to add 1 to each

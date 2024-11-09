@@ -195,6 +195,7 @@ function registerSettings() {
     name: game.i18n.localize("StoryTeller2.Settings.Size"),
     hint: game.i18n.localize("StoryTeller2.Settings.SizeHint"),
     scope: "client",
+    requiresReload: true,
     type: Number,
     choices: {
       70: "70%",
