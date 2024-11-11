@@ -7,8 +7,6 @@ When you press the "Show players" key, the story is shown to all active players.
 
 This mod is an update to what appears to be an abandoned mod by Xbozon(https://github.com/Xbozon/storyteller). I have changed some of the functionality to fit my own needs as well as to correct a few bugs.
 
-For best effect.
-
 ## How it looks
 
 ![alt text](.github/Story_Table_of_Contents_and_New_Text_Page.webp "Title")

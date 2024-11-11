@@ -138,7 +138,7 @@ export class SingleSheetClean extends JournalSheet {
 
     if (game.user.isGM) {
       buttons.unshift({
-        label: "STORYTELLER2.CopyID",
+        label: "StoryTeller2.CopyID",
         class: "switch-copyid",
         icon: "fas fa-crosshairs",
         onclick: (ev) => this._onCopyID(ev),
@@ -173,7 +173,7 @@ export class SingleSheetClean extends JournalSheet {
     document.body.removeChild(aux);
 
     ui.notifications.info(
-      game.i18n.format("STORYTELLER2.CopyIDMessage", {
+      game.i18n.format("StoryTeller2.CopyIDMessage", {
         mode: "text",
         title: "Info",
         which: "authorized",

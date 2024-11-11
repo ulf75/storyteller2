@@ -33,7 +33,7 @@ class StoryTeller2 {
   }
 
   _activateSocketListeners(socket) {
-    socket.on("module.StoryTeller2", this._setPageToOpen.bind(this));
+    socket.on("module.storyteller2", this._setPageToOpen.bind(this));
   }
 
   registerObjects(types, labels) {
@@ -52,6 +52,33 @@ class StoryTeller2 {
     //CONFIG.JournalEntry.typeLabels = mergeObject((CONFIG.JournalEntry.typeLabels || {}), labels)
   }
 
+  showStoryByIDToAll(id = "", page = 0) {
+    if (page !== 0) {
+      game.socket.emit("module.storyteller2", {
+        action: "setPageToOpen",
+        id: id,
+        page: page,
+      });
+      let pages = game.settings.get(`${MODULE_ID}`, "pages");
+      pages[id] = page;
+      game.settings.set(`${MODULE_ID}`, "pages", pages);
+    }
+
+    let story = game.journal.get(id);
+    story.show("text");
+  }
+
+  showStoryToPlayerOnly(id = "", page = 0) {
+    if (page !== 0) {
+      let pages = game.settings.get(`${MODULE_ID}`, "pages");
+      pages[id] = page;
+      game.settings.set(`${MODULE_ID}`, "pages", pages);
+    }
+
+    let story = game.journal.get(id);
+    story.sheet.render(true);
+  }
+
   async _setPageToOpen(data) {
     if (data.action !== "setPageToOpen" || data.id === "") {
       return;
@@ -62,9 +89,6 @@ class StoryTeller2 {
     let pages = game.settings.get("StoryTeller2", "pages");
     pages[data.id] = data.page;
     await game.settings.set("StoryTeller2", "pages", pages);
-
-    //let story = game.journal.get(id)
-    //story.sheet.render(true)
   }
 
   /*
@@ -86,54 +110,6 @@ class StoryTeller2 {
   }
 }
 
-/*
-class StoryTeller2Model extends foundry.abstract.TypeDataModel {
-  static LOCALIZATION_PREFIXES = ["StoryTeller2.path"];
-
-  static defineSchema() {
-    const fields = foundry.data.fields;
-    return {
-      description: new fields.SchemaField({
-        long: new fields.HTMLField({ required: false, blank: true }),
-        short: new fields.HTMLField({ required: false, blank: true }),
-      }),
-      img: new fields.FilePathField({ required: false, categories: ["IMAGE"] }),
-      steps: new fields.ArrayField(new fields.StringField({ blank: true })),
-    };
-  }
-
-  prepareDerivedData() {
-    this.nSteps = this.steps.length;
-  }
-}
-  
-
-class StoryTeller2PageSheet extends JournalTextPageSheet {
-  get template() {
-    return `modules/${MODULE_ID}/templates/storyteller2-sheet-${
-      this.isEditable ? "edit" : "view"
-    }.html`;
-  }
-
-  async getData(options = {}) {
-    const context = await super.getData(options);
-    context.description = {
-      long: await TextEditor.enrichHTML(this.object.system.description.long, {
-        async: true,
-        secrets: this.object.isOwner,
-        relativeTo: this.object,
-      }),
-      short: await TextEditor.enrichHTML(this.object.system.description.short, {
-        async: true,
-        secrets: this.object.isOwner,
-        relativeTo: this.object,
-      }),
-    };
-    return context;
-  }
-}
-*/
-
 Hooks.on("ready", () => {
   game.StoryTeller2.registerAddonSheet({
     key: "StorySheet",
@@ -141,43 +117,8 @@ Hooks.on("ready", () => {
     label: "StoryTeller2.StorySheet",
   });
 
-  /* 
-  game.StoryTeller2.registerAddonSheet({
-    key: "minimal",
-    
-    sheet: SingleSheetMinimal,
-    
-    label: "StoryTeller2.SingleSheetMinimal",
-  });
-  */
   console.log("Story Teller 2 Journal | Ready");
 });
-/*
-Hooks.on("renderJournalSheet", (app, [html], context) => {
- 
-  const isBookJournalSheet = app.document.getFlag(
-    "storyteller2",
-    "isBookJournal"
-  );
-  const hasBookJournalPages = app.document.pages.some(
-    (p) => p.type === "storyteller2.bookpage"
-  );
-  if (isBookJournalSheet) {
-    if (!html.classList.contains("storyteller2")) {
-      html.classList.add("storyteller2");
-    }
-    console.log("This Journal is of type Book Journal!");
-  }
-  if (app.document.pages.some((p) => p.type === "storyteller2.bookpage")) {
-    if (!html.classList.contains("storyteller2")) {
-      html.classList.add("storyteller2");
-      app.document.setFlag("storyteller2", "isBookJournal", true);
-    }
-  }
-  //app.setPosition({ scale: 1.1 });
-  
-});
-*/
 
 Hooks.on("init", () => {
   registerSettings();
@@ -222,34 +163,6 @@ function registerSettings() {
     default: {},
     config: false,
   });
-
-  /*
-  game.settings.register(`${MODULE_ID}`, "background", {
-    name: game.i18n.localize(
-      "StoryTeller2.Settings.ImageBackground"
-    ),
-    hint: game.i18n.localize(
-      "StoryTeller2.Settings.ImageBackgroundHint"
-    ),
-    scope: "world",
-    type: Boolean,
-    default: true,
-    config: true,
-  });
-
-  game.settings.register(`${MODULE_ID}`, "dontOpen", {
-    name: game.i18n.localize(
-      "StoryTeller2.Settings.DontOpenImages"
-    ),
-    hint: game.i18n.localize(
-      "StoryTeller2.Settings.DontOpenImagesHint"
-    ),
-    scope: "world",
-    type: Boolean,
-    default: true,
-    config: true,
-  });
-  */
 }
 
 Handlebars.registerHelper("offset", function (value) {
