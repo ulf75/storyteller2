@@ -1,4 +1,4 @@
-# Storyteller for Foundry VTT
+# Storyteller 2 for Foundry VTT
 
 A small modification that allows you to present the story in the game as an open book. Inspired by the storyteller from Pathfinder: Kingmaker
 
