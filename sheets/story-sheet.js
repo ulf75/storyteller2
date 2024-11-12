@@ -52,7 +52,7 @@ export class StorySheet extends JournalSheet {
 
     if (game.user.isGM) {
       buttons.unshift({
-        label: "StoryTeller2.CopyID",
+        label: "STORYTELLER2.CopyID",
         class: "switch-copyid",
         icon: "fas fa-crosshairs",
         onclick: (ev) => this._onCopyID(ev),
@@ -80,7 +80,7 @@ export class StorySheet extends JournalSheet {
     document.body.removeChild(aux);
 
     ui.notifications.info(
-      game.i18n.format("StoryTeller2.CopyIDMessage", {
+      game.i18n.format("STORYTELLER2.CopyIDMessage", {
         mode: "text",
         title: "Info",
         which: "authorized",
@@ -200,7 +200,7 @@ export class StorySheet extends JournalSheet {
       ui.activeWindow.Pager?.pages?.getPage(currentPageNumber)?.element
         ?.firstElementChild?.dataset.pageId;
     // Save current page to global storage
-    game.socket.emit("module.storyteller2", {
+    game.socket.emit("module.StoryTeller2", {
       action: "setPageToOpen",
       id: id,
       page: getPage(id),

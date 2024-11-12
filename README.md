@@ -2,10 +2,7 @@
 
 A small modification that allows you to present the story in the game as an open book. Inspired by the storyteller from Pathfinder: Kingmaker
 
-The modification allows you to use pre-prepared event descriptions, playing them out when your group gets into trouble.
-When you press the "Show players" key, the story is shown to all active players.
-
-This mod is an update to what appears to be an abandoned mod by Xbozon(https://github.com/Xbozon/storyteller). I have changed some of the functionality to fit my own needs as well as to correct a few bugs.
+This mod is an update to the original Storyteller mod by Xbozon(https://github.com/Xbozon/storyteller). I have changed some of the functionality to fit my own needs as well as to correct a few bugs.
 
 ## How it looks
 
@@ -15,6 +12,17 @@ Each Journal Page can be selected by clicking on the page from the Table of Cont
 Additionally, you may use the page navigation icons in the lower left or right hand corners as well as utilize the left or right arrow keys on your keyboard(editable via the core keybindings within foundry.)
 
 There are currently 2 settings.
+
+## How it works
+
+1. Click "Create Journal Entry" as you normally would
+2. Enter a name for your Journal
+3. Edit the sheet type via the Sheet button in the top right corner and select Story Sheet(name subject to change)
+4. Add Page(s)
+
+![alt text](.github/StoryTeller2.gif "Title")
+
+NOTE: If you are using Monk's Enhanced Journal, there is extra work required as the Sheet button does not show up automatically! TBD.
 
 ## Settings
 
