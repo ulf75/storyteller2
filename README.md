@@ -15,6 +15,8 @@ There are currently 2 settings.
 
 ## How it works
 
+**NOTE** While you certainly CAN add a pdf page, I would not recommend it. It just does not look all that great IMHO. Also, if you add a video, I would suggest NOT setting it to play automatically. As part of creating the pages, ALL pages are loaded at once, so this would play your video every time you open the Journal even it's on a page deep within the book.
+
 1. Click "Create Journal Entry" as you normally would
 2. Enter a name for your Journal
 3. Edit the sheet type via the Sheet button in the top right corner and select Story Sheet(name subject to change)
@@ -31,6 +33,8 @@ There are currently 2 settings.
 This will open the "default" Journal Entry pages just like what would happen if Monk's Enhanced Journal is NOT installed. From there, select the Sheet type Story Sheet as you would normally. The initial entry created by Monk's Enhanced Journal will NOT be navigable via the Table of Contents page until you add at LEAST one additional page. So far in my testing, everything else seems to work normally after that point.
 
 ![alt text](.github/Monks_Enhanced_Journal_Open_Outside.webp "Title")
+
+You may also convert an existing Journal into a Story Sheet, but keep in mind that the default styling assumes that all pages are flat(since Chapters in a book don't generally have subheadings as the Foundry Journal does!) and at level 1. In fact, when adding a page from the Story Sheet interface, I have removed both the Level and the Do not Show heading buttons on the top right corner of the Editor.
 
 ## Settings
 
@@ -60,6 +64,5 @@ Possible ideas future ideas:
 ## Technical Details
 
 The original mod used a library named turn.js. I had to abandon that since the implementation was completely minimized javascript and it was 12 years old. I then utilized StPageFlip(https://github.com/Nodlik/StPageFlip/releases) by Nodlik, making a number of changes and incorporating bug fixes from other users plus my own(as best as I could.).
-
 
 ![Latest Release Download Count](https://img.shields.io/github/downloads/jfrazierjr/storyteller2/latest/module.zip)
