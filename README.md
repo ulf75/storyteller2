@@ -52,3 +52,6 @@ Possible ideas future ideas:
 ## Technical Details
 
 The original mod used a library named turn.js. I had to abandon that since the implementation was completely minimized javascript and it was 12 years old. I then utilized StPageFlip(https://github.com/Nodlik/StPageFlip/releases) by Nodlik, making a number of changes and incorporating bug fixes from other users plus my own(as best as I could.).
+
+
+![Latest Release Download Count](https://img.shields.io/github/downloads/jfrazierjr/storyteller2/latest/module.zip)
