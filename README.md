@@ -22,7 +22,15 @@ There are currently 2 settings.
 
 ![alt text](.github/StoryTeller2.gif "Title")
 
-NOTE: If you are using Monk's Enhanced Journal, there is extra work required as the Sheet button does not show up automatically! TBD.
+**NOTE**: If you are using Monk's Enhanced Journal, there is extra work required as the Sheet button does not show up automatically!
+
+1. Create a new Journal of type Adventure Book -> Text, Image, PDF, or Video as normal.
+2. Right click on the newly created journal in either Monk's Enhanced Journal OR the default Journal nav page.
+3. Click "Open Outside Enhanced Browser"
+
+This will open the "default" Journal Entry pages just like what would happen if Monk's Enhanced Journal is NOT installed. From there, select the Sheet type Story Sheet as you would normally. The initial entry created by Monk's Enhanced Journal will NOT be navigable via the Table of Contents page until you add at LEAST one additional page. So far in my testing, everything else seems to work normally after that point.
+
+![alt text](.github/Monks_Enhanced_Journal_Open_Outside.webp "Title")
 
 ## Settings
 
