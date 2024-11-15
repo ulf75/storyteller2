@@ -115,6 +115,7 @@ jobs:
             README.md                            \
             LICENSE                              \
             templates                            \
+            sounds/                              \
             scripts/                             \
             css/                                 \
             packs/                               \
