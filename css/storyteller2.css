@@ -20,8 +20,7 @@
 }
 .app.window-app.sheet.story-sheet
   + .journal-sheet.journal-entry-page
-  .window-header,
-h4 {
+  .window-header {
   /* font-family: "Kurale", serif; */
   font-weight: 900;
   color: white;
