@@ -7,13 +7,13 @@
   background: url(../img/old_book/editor.webp);
   background-size: 100% 100%;
   border: none;
-  font-family: "Kurale", serif;
+  /* font-family: "Kurale", serif; */
   font-weight: 600;
   opacity: 0.9;
   color: #48392e;
 }
 .app.window-app.sheet.story-sheet + .journal-sheet.journal-entry-page .title {
-  font-family: "Kurale", serif;
+  /* font-family: "Kurale", serif; */
   font-weight: 600;
   opacity: 0.9;
   color: #48392e;
@@ -22,7 +22,7 @@
   + .journal-sheet.journal-entry-page
   .window-header,
 h4 {
-  font-family: "Kurale", serif;
+  /* font-family: "Kurale", serif; */
   font-weight: 900;
   color: white;
 }
@@ -206,7 +206,7 @@ nav.storyteller-nav.tabs {
 }
 
 .story-sheet .page-num .journal-page-header h1 {
-  font-family: "Kurale", serif;
+  /* font-family: "Kurale", serif; */
   font-weight: 600;
   opacity: 0.9;
   color: #48392e;
@@ -215,7 +215,7 @@ nav.storyteller-nav.tabs {
 .story-sheet .journal-page-content,
 .story-sheet .page-num.num-start h1,
 .story-sheet .page-num.num-start .pages-list > ol {
-  font-family: "Kurale", serif;
+  /* font-family: "Kurale", serif; */
   font-size: 1.4vh;
   font-weight: 600;
   opacity: 0.9;
@@ -228,7 +228,7 @@ nav.storyteller-nav.tabs {
 }
 
 .story-sheet .journal-page-content {
-  font-family: "Kurale", serif;
+  /* font-family: "Kurale", serif; */
   /*    font-size: 1.4vh;*/
   font-size: 1.5vh;
   font-weight: 600;
@@ -272,7 +272,7 @@ nav.storyteller-nav.tabs {
 }
 
 .story-sheet .page-num.num-start input {
-  font-family: "Kurale", serif;
+  /* font-family: "Kurale", serif; */
   opacity: 0.9;
   color: #48392e;
   text-align: center;
