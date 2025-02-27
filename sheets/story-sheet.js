@@ -103,6 +103,11 @@ export class StorySheet extends JournalSheet {
       savedPage = data.pages.length - 1;
     }
 
+    // non GMs should not see the TOC
+    if (savedPage === 0 && !game.user.isGM) {
+      savedPage = 1;
+    }
+
     this.Pager = this.getPager(storyId, savedPage);
 
     if (this.Pager.pages == null) {
@@ -181,6 +186,16 @@ export class StorySheet extends JournalSheet {
           });
       }
     }
+
+    let leftArrow = this.element[0].querySelectorAll(
+      ".page-num .journal-page-arrow-left.prev"
+    );
+
+    // non GMs should not see the TOC
+    if (leftArrow != null && !game.user.isGM) {
+      leftArrow[1].style.display = "none";
+    }
+
     return;
   }
 

@@ -13,7 +13,13 @@ export function registerHotkeys() {
         SHEET_TYPES &&
         SHEET_TYPES.includes(ui.activeWindow.constructor.name)
       ) {
-        ui.activeWindow.Pager.flipPrev();
+        // non GMs should not see the TOC
+        if (
+          ui.activeWindow.Pager.pages.currentPageIndex > 1 ||
+          game.user.isGM
+        ) {
+          ui.activeWindow.Pager.flipPrev();
+        }
       }
     },
   });
