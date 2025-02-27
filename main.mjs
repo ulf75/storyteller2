@@ -1,8 +1,5 @@
-import { SingleSheetClean } from "./sheets/single-sheet-clean.js";
-import { SingleSheetMinimal } from "./sheets/single-sheet-minimal.js";
-
-import { StorySheet } from "./sheets/story-sheet.js";
 import { registerHotkeys } from "./scripts/config.js";
+import { StorySheet } from "./sheets/story-sheet.js";
 
 export const MODULE_ID = "storyteller2";
 
@@ -124,7 +121,7 @@ Hooks.on("init", () => {
   registerSettings();
   game.StoryTeller2 = new StoryTeller2();
   game.StoryTeller2.init();
-  CONFIG.debug.hooks = true;
+  // CONFIG.debug.hooks = true;
 });
 
 Hooks.once("init", function () {
