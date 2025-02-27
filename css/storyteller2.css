@@ -28,11 +28,6 @@
 
 .app.window-app.sheet.story-sheet
   + .journal-sheet.journal-entry-page
-  aside.page-level {
-  display: none;
-}
-.app.window-app.sheet.story-sheet
-  + .journal-sheet.journal-entry-page
   .window-header {
   background: none;
 }
@@ -314,7 +309,7 @@ nav.storyteller-nav.tabs {
 .story-sheet .journal-entry-page.image,
 .story-sheet .journal-entry-page.image figure {
   height: 100%;
-  margin: 0;
+  margin: 20px;
 }
 
 .page-num.--right .journal-page-arrow-left.prev {
@@ -382,4 +377,17 @@ div.app.sheet.story-sheet.journal-sheet.journal-entry
   background: url(../img/single_sheet_parchment/header.webp);
   /*background-size: 100% 100%;*/
   border: none;
+}
+
+.journal-entry-page.image figure img {
+  -webkit-mask-image: url(../img/journal_mask.webp);
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: url(../img/journal_mask.webp);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  max-height: 90%;
+  max-width: 100%;
 }
