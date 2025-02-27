@@ -20,7 +20,7 @@
   ],
   "styles": ["css/storyteller2.css", "css/storyteller2-singlesheet.css"],
   "title": "StoryTeller 2",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "url": "#{URL}#",
   "manifest": "#{MANIFEST}#",
   "download": "#{DOWNLOAD}#",
