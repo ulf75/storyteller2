@@ -15,7 +15,7 @@
             }
         },
         {
-            "files": "*.yml",
+            "files": "*.css",
             "options": {
                 "tabWidth": 2
             }

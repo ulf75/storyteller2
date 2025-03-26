@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Kurale&display=swap");
-@import "compability.css";
-@import "themes/newspaper.css";
-@import "themes/fullscreen.css";
+@import url('https://fonts.googleapis.com/css2?family=Kurale&display=swap');
+@import 'compability.css';
+@import 'themes/newspaper.css';
+@import 'themes/fullscreen.css';
 
 .app.window-app.sheet.story-sheet + .journal-sheet.journal-entry-page {
   background: url(../img/old_book/editor.webp);
@@ -18,29 +18,21 @@
   opacity: 0.9;
   color: #48392e;
 }
-.app.window-app.sheet.story-sheet
-  + .journal-sheet.journal-entry-page
-  .window-header {
+.app.window-app.sheet.story-sheet + .journal-sheet.journal-entry-page .window-header {
   /* font-family: "Kurale", serif; */
   font-weight: 900;
   color: white;
 }
 
-.app.window-app.sheet.story-sheet
-  + .journal-sheet.journal-entry-page
-  .window-header {
+.app.window-app.sheet.story-sheet + .journal-sheet.journal-entry-page .window-header {
   background: none;
 }
 
-.app.window-app.sheet.story-sheet
-  + .journal-sheet.journal-entry-page
-  .window-content {
+.app.window-app.sheet.story-sheet + .journal-sheet.journal-entry-page .window-content {
   background: none;
 }
 
-.app.window-app.sheet.story-sheet
-  + .journal-sheet.journal-entry-page
-  .window-header {
+.app.window-app.sheet.story-sheet + .journal-sheet.journal-entry-page .window-header {
   background: url(../img/old_book/header_old.webp);
   /*background-size: 100% 100%;*/
   border: none;
@@ -66,10 +58,10 @@
 .pages .page-num .journal-page-arrow-right.storyteller2-page-entry-nav {
   background: black;
   z-index: 10;
-  -webkit-mask-image: url("../img/nav/arrow_in_circle_right_mask.webp");
+  -webkit-mask-image: url('../img/nav/arrow_in_circle_right_mask.webp');
   -webkit-mask-size: 32px 32px;
   -webkit-mask-repeat: no-repeat;
-  mask-image: url("../img/nav/arrow_in_circle_right_mask.webp");
+  mask-image: url('../img/nav/arrow_in_circle_right_mask.webp');
   mask-size: 32px;
   mask-repeat: no-repeat;
   mask-position: center;
@@ -88,10 +80,10 @@
 
 .pages .page-num .journal-page-arrow-left.storyteller2-page-entry-nav {
   background: black;
-  -webkit-mask-image: url("../img/nav/arrow_in_circle_left_mask.webp");
+  -webkit-mask-image: url('../img/nav/arrow_in_circle_left_mask.webp');
   -webkit-mask-size: 32px 32px;
   -webkit-mask-repeat: no-repeat;
-  mask-image: url("../img/nav/arrow_in_circle_left_mask.webp");
+  mask-image: url('../img/nav/arrow_in_circle_left_mask.webp');
   mask-size: 32px;
   mask-repeat: no-repeat;
   mask-position: center;
@@ -144,7 +136,7 @@ nav.storyteller-nav.tabs {
 
 .story-sheet:before {
   position: absolute;
-  content: " ";
+  content: ' ';
   width: 100%;
   height: 100%;
   background: url(../img/old_book/book.webp);
@@ -153,7 +145,7 @@ nav.storyteller-nav.tabs {
 }
 
 .story-sheet-background {
-  content: " ";
+  content: ' ';
   position: fixed;
   top: 0;
   bottom: 0;
@@ -234,6 +226,16 @@ nav.storyteller-nav.tabs {
 
 .story-sheet .journal-page-content img {
   border: none;
+}
+
+.story-sheet .journal-page-content th,
+.story-sheet .journal-page-content td {
+  padding: 4px;
+}
+
+.story-sheet .journal-page-content th p,
+.story-sheet .journal-page-content td p {
+  margin: 0;
 }
 
 .story-sheet .page-num.num-start .pages-list > ol > li .page-title {
@@ -333,10 +335,7 @@ div.app.sheet.story-sheet.journal-sheet.journal-entry section.window-content {
   background: transparent !important;
 }
 
-div.app.sheet.story-sheet.journal-sheet.journal-entry
-  section.window-content
-  div.journal-sheet-container
-  section.journal-entry-content {
+div.app.sheet.story-sheet.journal-sheet.journal-entry section.window-content div.journal-sheet-container section.journal-entry-content {
   background: transparent !important;
 }
 
@@ -367,9 +366,7 @@ div.app.sheet.story-sheet.journal-sheet.journal-entry
   background: none;
 }
 
-.story-sheet
-  .window-app.sheet.journal-sheet.journal-entry-page
-  .window-content {
+.story-sheet .window-app.sheet.journal-sheet.journal-entry-page .window-content {
   background: none;
 }
 
